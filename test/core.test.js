@@ -18,4 +18,8 @@ describe('Pow', () => {
     test('Deberia 12 ^ 2 = 144', () => {
         expect(core.pow(12)).toBe(144); 
     })
+
+    test('Deberia -2 ^ 2 = 4', () => {
+        expect(core.pow(-2)).toBe(4);
+    })
 })
