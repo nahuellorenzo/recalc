@@ -53,7 +53,7 @@ router.get("/div/:a/:b", async function (req, res) {
     const b = Number(params.b);
     
     if (isNaN(a) || isNaN(b)) {
-        res.status(400).send('Uno de los parámetros no es un número');
+        res.status(400).send({"error":'Uno de los parámetros no es un número'});
     } else {
         const result = core.div(a, b);
         return res.send({ result });
