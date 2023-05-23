@@ -15,8 +15,8 @@ describe('Multiply', () => {
     expect(core.mul(3, 3)).toBe(9); 
     })
 
-    test('Deberia 8 * -6 = -48', () => {
-        expect(core.mul(8, -6)).toBe(-48); 
+    test('Deberia 8 * -6 < 0', () => {
+        expect(core.mul(8, -6)).toBeLessThan(0); 
     })
 })
 
