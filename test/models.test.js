@@ -21,10 +21,30 @@ describe("History", () => {
         const histories = await History.findAll({
             include: [Operation]
         })
-
+        
         expect(histories.length).toEqual(1)
         expect(histories[0].firstArg).toEqual(2)
+        expect(histories[0].secondArg).toEqual(2)
         expect(histories[0].result).toEqual(0)
+        expect(histories[0].Operation.name).toEqual("SUB")
+    })
+
+    test("Deberia poder crear una resta con parametros negativos en el history", async () => {
+        await createHistoryEntry({
+            firstArg: -2,
+            secondArg: -2,
+            result: -4,
+            operationName: "SUB"
+        })
+
+        const histories = await History.findAll({
+            include: [Operation]
+        })
+        
+        expect(histories.length).toEqual(1)
+        expect(histories[0].firstArg).toEqual(-2)
+        expect(histories[0].secondArg).toEqual(-2)
+        expect(histories[0].result).toEqual(-4)
         expect(histories[0].Operation.name).toEqual("SUB")
     })
 })
