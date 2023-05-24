@@ -15,7 +15,7 @@ router.get("/sub/:a/:b", async function (req, res) {
     } else {
         const result = core.sub(a, b);
 
-        await createHistoryEntry({ firstArg: a, secondArg: b, result, operationName: "SUB" })
+        await createHistoryEntry({ firstArg: a, secondArg: b, result, operationName: "SUB", error: null })
         return res.send({ result });
     }
 });
