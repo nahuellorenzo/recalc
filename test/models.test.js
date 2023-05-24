@@ -2,7 +2,8 @@ const { seed } = require('../src/seed.js')
 const {
     createHistoryEntry,
     History,
-    Operation
+    Operation,
+    getHistory
 } = require('../src/models.js')
 
 beforeEach(async () => {
@@ -68,4 +69,32 @@ describe("History", () => {
         expect(histories[0].Operation.name).toEqual("SUB")
         expect(histories[0].error).toEqual(null)
     })
+})
+
+describe("History", () => {    
+
+    test("Debería retornar todas las operaciones que se realizaron en la Base de Datos con 2 operaciones", async () => {
+            await createHistoryEntry({
+                firstArg: 2,
+                secondArg: 2,
+                result: 0,
+                operationName: "SUB"
+            })
+            await createHistoryEntry({
+                firstArg: 2,
+                secondArg: 2,
+                result: 0,
+                operationName: "SUB"
+            })
+        const histories = await History.findAll();
+
+        expect(histories.length).toEqual(2)
+    })
+
+
+    test("Debería retornar todas las operaciones que se realizaron en la Base de Datos con 0 operaciones", async () => {
+        const histories = await History.findAll();
+
+        expect(histories.length).toEqual(0)
+        })
 })
