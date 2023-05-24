@@ -60,3 +60,7 @@ export function createTables() {
         Operation.sync({ force: true })
     ]);
 }
+
+export function getHistory() {
+    return History.findAll()
+};
