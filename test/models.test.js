@@ -33,7 +33,7 @@ describe("History", () => {
         await createHistoryEntry({
             firstArg: -2,
             secondArg: -2,
-            result: -4,
+            result: 0,
             operationName: "SUB"
         })
 
@@ -44,7 +44,7 @@ describe("History", () => {
         expect(histories.length).toEqual(1)
         expect(histories[0].firstArg).toEqual(-2)
         expect(histories[0].secondArg).toEqual(-2)
-        expect(histories[0].result).toEqual(-4)
+        expect(histories[0].result).toEqual(0)
         expect(histories[0].Operation.name).toEqual("SUB")
     })
 
