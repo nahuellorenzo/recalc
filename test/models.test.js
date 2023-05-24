@@ -3,7 +3,8 @@ const {
     createHistoryEntry,
     History,
     Operation,
-    getHistory
+    getHistory,
+    deleteAllHistory
 } = require('../src/models.js')
 
 beforeEach(async () => {
@@ -98,3 +99,28 @@ describe("History", () => {
         expect(histories.length).toEqual(0)
         })
 })
+
+describe("History", () => {    
+
+    test("Debería retornar que se borraron los datos en la Base de Datos", async () => {
+            await createHistoryEntry({
+                firstArg: 2,
+                secondArg: 2,
+                result: 0,
+                operationName: "SUB"
+            })
+            await createHistoryEntry({
+                firstArg: 2,
+                secondArg: 2,
+                result: 0,
+                operationName: "SUB"
+            })
+
+        const historiesdeleted = await deleteAllHistory();
+        const histories = await getHistory();
+
+        expect(historiesdeleted).toEqual(2)
+        expect(histories.length).toEqual(0)
+
+    })
+}) 
