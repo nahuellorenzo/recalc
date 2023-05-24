@@ -64,3 +64,9 @@ export function createTables() {
 export function getHistory() {
     return History.findAll()
 };
+
+export function deleteAllHistory() {
+    return History.destroy({
+        where: {}
+    })
+}
