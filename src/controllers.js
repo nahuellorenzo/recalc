@@ -29,6 +29,8 @@ router.get("/add/:a/:b", async function (req, res) {
         res.status(400).send({"error":'Uno de los parámetros no es un número'});
     } else {
         const result = core.add(a, b);
+
+        await createHistoryEntry({ firstArg: a, secondArg: b, result, operationName: "ADD", error: null })
         return res.send({ result });
     }
 });
