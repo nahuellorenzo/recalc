@@ -59,3 +59,15 @@ describe("API power", () => {
 })
 
 
+describe("API id", () => {
+    test("Deberia responder con un 200 ok", async () => {
+        const app = await api.build()
+
+        return request(app).get('/api/v1/id/45')
+            .expect(404)
+            .expect('Content-Type', "application/json; charset=utf-8")
+            .then((err) => {
+                expect(err.body.error).toEqual("No se encontró ninguna entrada de historial con el ID proporcionado");
+            })      
+    })
+})
