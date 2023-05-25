@@ -79,6 +79,20 @@ router.get("/mul/:a/:b", async function (req, res) {
     }
 });
 
+router.get("/sqrt/:a", async function (req, res) {
+    const params = req.params;
+    const a = Number(params.a);
+
+    if (isNaN(a)) {
+        res.status(400).send({ "error": 'El parámetro no es un numero' });
+    } else {
+        const result = core.sqrt(a);
+
+        await createHistoryEntry({ firstArg: a, result, operationName: "SQRT", error: null })
+        return res.send({ result });
+    }
+});
+
 router.get("/all", async function (req, res) {
     const result = getHistory()
         .then((resp) => res.send({ resp }))
