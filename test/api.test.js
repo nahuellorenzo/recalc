@@ -32,3 +32,16 @@ describe("API add", () => {
     })
 })
 
+describe("API power", () => {
+    test("Deberia responder con un 400 Error", async () => {
+        const app = await api.build()
+
+        return request(app).get('/api/v1/pow/a')
+            .expect(400)
+            .expect('Content-Type', "application/json; charset=utf-8")
+            .then((err) => {
+                expect(err.body.error).toEqual("Uno de los parámetros no es un número"); 
+            })
+    })
+})
+
