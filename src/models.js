@@ -70,3 +70,9 @@ export function deleteAllHistory() {
         where: {}
     })
 }
+
+export function getHistoryEntryById(id) {
+    return History.findByPk(id, {
+      include: Operation
+    });
+  }
