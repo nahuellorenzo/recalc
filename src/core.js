@@ -26,10 +26,18 @@ function pow(a) {
     return a*a
 }
 
+function sqrt(a) {
+    if (a<0){
+        return "Math Error"
+    }
+    return Math.sqrt(a)
+}    
+
 export default {
     add: add,
     sub: subtract,
     mul: multiply,
     div: divide,
-    pow: pow
+    pow: pow,
+    sqrt: sqrt
 }
