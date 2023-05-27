@@ -58,6 +58,9 @@ router.get("/div/:a/:b", async function (req, res) {
 
     if (isNaN(a) || isNaN(b)) {
         res.status(400).send({ "error": 'Uno de los parámetros no es un número' });
+    } else if(b == 0){
+        res.status(400).send({ "error": 'El divisor no puede ser cero' });
+    
     } else {
         const result = core.div(a, b);
 
