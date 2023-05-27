@@ -85,3 +85,16 @@ describe("API id", () => {
             })      
     })
 })
+
+describe("API div", () => {
+    test("si el segundo parámetro es 0, el endpoint devuelve el mensaje de error con un status 400.", async () => {
+        const app = await api.build()
+
+        return request(app).get('/api/v1/div/2/0')
+            .expect(400)
+            .expect('Content-Type', "application/json; charset=utf-8")
+            .then((res) => {
+                expect(res.body.error).toEqual("El divisor no puede ser cero");
+            })
+    })
+})

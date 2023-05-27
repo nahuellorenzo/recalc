@@ -60,9 +60,12 @@ router.get("/div/:a/:b", async function (req, res) {
         res.status(400).send({ "error": 'Uno de los parámetros no es un número' });
     } else {
         const result = core.div(a, b);
-
+        if(result == "Math Error"){
+            res.status(400).send({ "error": 'El divisor no puede ser cero' });
+        } else {
         await createHistoryEntry({ firstArg: a, secondArg: b, result, operationName: "DIV", error: null })
         return res.send({ result });
+        }
     }
 });
 
