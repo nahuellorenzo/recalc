@@ -45,6 +45,20 @@ describe("API add", () => {
     })
 })
 
+describe("API add", () => {
+    test("La suma de 0.1 con 0.2, debe dar 0.3.", async () => {
+        const app = await api.build()
+        
+        return request(app).get('/api/v1/add/0.1/0.2')
+            .expect(200)
+            .expect('Content-Type', "application/json; charset=utf-8")
+
+            .then((res) => {
+                expect(res.body.result).toBeCloseTo(0.3);
+            })
+    })
+})
+
 describe("API power", () => {
     test("Deberia responder con un 400 Error", async () => {
         const app = await api.build()
