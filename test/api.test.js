@@ -98,3 +98,17 @@ describe("API div", () => {
             })
     })
 })
+
+describe("API sqrt", () => {
+    test("La raiz cuadrada de 100, debe dar 10.", async () => {
+        const app = await api.build()
+        
+        return request(app).get('/api/v1/sqrt/100')
+            .expect(200)
+            .expect('Content-Type', "application/json; charset=utf-8")
+
+            .then((res) => {
+                expect(res.body.result).toEqual(10);
+            })
+    })
+})
