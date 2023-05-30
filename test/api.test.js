@@ -1,6 +1,7 @@
 const request = require('supertest');
 const api = require('../src/api.js');
-const { seed } = require('../src/seed.js')
+const { seed } = require('../src/seed.js');
+const { getHistory } = require('../src/models.js');
 
 beforeEach(async () => {
     await seed()
@@ -109,6 +110,19 @@ describe("API sqrt", () => {
 
             .then((res) => {
                 expect(res.body.result).toEqual(10);
+            })
+    })
+})
+
+describe("History deleted All", () => {
+    test("Deberia eliminar History con un status 200.", async () => {
+        const app = await api.build()
+        const cantidad = (await getHistory()).length
+        return request(app).get('/api/v1/allDeleted')
+            .expect(200)
+            .expect('Content-Type', "application/json; charset=utf-8")
+            .then((res) => {
+                expect(res.body.result).toEqual(cantidad + " registros eliminados de la tabla History.");
             })
     })
 })
