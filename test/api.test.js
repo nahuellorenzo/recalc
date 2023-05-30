@@ -126,3 +126,16 @@ describe("History deleted All", () => {
             })
     })
 })
+
+describe("History All", () => {
+    test("Deberia retornar todo History con un status 200.", async () => {
+        const app = await api.build()
+        const cantidad = (await getHistory())
+        return request(app).get('/api/v1/all')
+            .expect(200)
+            .expect('Content-Type', "application/json; charset=utf-8")
+            .then((res) => {
+                expect(res.body.resp).toEqual(cantidad);
+            })
+    })
+})
