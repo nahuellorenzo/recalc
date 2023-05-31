@@ -139,3 +139,17 @@ describe("History All", () => {
             })
     })
 })
+
+describe("API Binary", () => {
+    test("El numero binario de 999 deberia ser 1111100111", async () => {
+        const app = await api.build()
+        
+        return request(app).get('/api/v1/binary/999')
+            .expect(200)
+            .expect('Content-Type', "application/json; charset=utf-8")
+
+            .then((res) => {
+                expect(res.body.result).toEqual(1111100111);
+            })
+    })
+})
