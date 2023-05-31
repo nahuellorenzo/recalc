@@ -61,9 +61,22 @@ export function createTables() {
     ]);
 }
 
-export function getHistory() {
-    return History.findAll()
-};
+export async function getHistory(operationName = null) {
+    try {
+        if (operationName) {
+            return await History.findAll({
+                include: Operation,
+                where: {
+                    "$Operation.name$": operationName
+                }
+            });
+        } else {
+            return await History.findAll({ include: Operation });
+        }
+    } catch (error) {
+        throw new Error('Error al obtener el historial de operaciones: ' + error.message);
+    }
+}
 
 export function deleteAllHistory() {
     return History.destroy({
@@ -73,6 +86,6 @@ export function deleteAllHistory() {
 
 export function getHistoryEntryById(id) {
     return History.findByPk(id, {
-      include: Operation
+        include: Operation
     });
-  }
+}

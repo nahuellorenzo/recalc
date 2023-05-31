@@ -1,7 +1,7 @@
 import express from 'express';
 import core from './core.js';
 
-import { createHistoryEntry, deleteAllHistory, getHistory, getHistoryEntryById} from "./models.js";
+import { createHistoryEntry, deleteAllHistory, getHistory, getHistoryEntryById } from "./models.js";
 
 const router = express.Router();
 
@@ -60,11 +60,11 @@ router.get("/div/:a/:b", async function (req, res) {
         res.status(400).send({ "error": 'Uno de los parámetros no es un número' });
     } else {
         const result = core.div(a, b);
-        if(result == "Math Error"){
+        if (result == "Math Error") {
             res.status(400).send({ "error": 'El divisor no puede ser cero' });
         } else {
-        await createHistoryEntry({ firstArg: a, secondArg: b, result, operationName: "DIV", error: null })
-        return res.send({ result });
+            await createHistoryEntry({ firstArg: a, secondArg: b, result, operationName: "DIV", error: null })
+            return res.send({ result });
         }
     }
 });
@@ -112,22 +112,34 @@ router.get("/binary/:a", async function (req, res) {
     }
 });
 
-router.get("/all", async function (req, res) {
-    const result = getHistory()
-        .then((resp) => res.send({ resp }))
-        .catch((error) => res.status(400).send({ error }));
+router.get("/all/:operation?", async function (req, res) {
+    try {
+        const { operation } = req.params;
+        let result;
 
-    return result;
+        if (operation === "mul" || operation === "div" || operation === "add" || operation === "sub" || operation === "pow" || operation === "sqrt" || operation === "binary") {
+            result = await getHistory(operation.toUpperCase());
+        } else if (!operation) {
+            result = await getHistory();
+        }
+        else {
+            return res.status(400).send({ "error": 'El parámetro no es una operacion' });
+        }
+
+        return res.send({ result });
+    } catch (error) {
+        return res.status(500).send({ error: 'Error al obtener el historial' });
+    }
 });
 
 router.get("/allDeleted", async function (req, res) {
     try {
         const rowsDeleted = await deleteAllHistory();
         console.log(`${rowsDeleted} registros eliminados de la tabla History.`);
-        res.status(200).send({"result":`${rowsDeleted} registros eliminados de la tabla History.`});
+        res.status(200).send({ "result": `${rowsDeleted} registros eliminados de la tabla History.` });
     } catch (error) {
         console.error('Error al eliminar los registros de History:', error);
-        res.status(500).send({"result":'Error al eliminar los registros de History.'});
+        res.status(500).send({ "result": 'Error al eliminar los registros de History.' });
     }
 });
 
@@ -148,4 +160,4 @@ router.get("/id/:id", async function (req, res) {
     }
 });
 
-    export default router;
+export default router;
