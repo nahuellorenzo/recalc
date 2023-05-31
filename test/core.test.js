@@ -60,3 +60,16 @@ describe('Pow', () => {
     })
 })
 
+describe('Binary', () => {
+    test('Deberia binary 0 = 0', () => {
+        expect(core.binary(0)).toBe(0); 
+    })
+
+    test('Deberia binary 23 = 10111', () => {
+        expect(core.binary(23)).toBe(10111); 
+    })
+
+    test('Deberia binary 10 = 1010', () => {
+        expect(core.binary(10)).toBe(1010);
+    })
+})
