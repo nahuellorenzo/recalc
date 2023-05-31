@@ -98,6 +98,20 @@ router.get("/sqrt/:a", async function (req, res) {
     }
 });
 
+router.get("/binary/:a", async function (req, res) {
+    const params = req.params;
+    const a = Number(params.a);
+
+    if (isNaN(a)) {
+        res.status(400).send({ "error": 'El parámetro no es un numero' });
+    } else {
+        const result = core.binary(a);
+
+        await createHistoryEntry({ firstArg: a, result, operationName: "BINARY", error: null })
+        return res.send({ result });
+    }
+});
+
 router.get("/all/:operation?", async function (req, res) {
     try {
         const { operation } = req.params;

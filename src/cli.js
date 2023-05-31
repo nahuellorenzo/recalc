@@ -15,7 +15,7 @@ async function loop() {
         console.log("👋👋👋");
         return readline.close();
     }
-    else if(fnName!=="add" && fnName!=="sub" && fnName!=="mul" && fnName!=="div" && fnName!=="pow" && fnName!=="sqrt") {
+    else if(fnName!=="add" && fnName!=="sub" && fnName!=="mul" && fnName!=="div" && fnName!=="pow" && fnName!=="sqrt" && fnName!=="binary") {
         console.log("La funcion ingresada no esta disponible");
         loop();
     }
@@ -23,7 +23,7 @@ async function loop() {
     const fn = core[fnName];
 
     let result
-    if (fnName === "pow" || fnName === "sqrt") {
+    if (fnName === "pow" || fnName === "sqrt" || fnName === "binary") {
         const num = await readline.question("Ingrese el número: ")
         result = fn(Number(num))
     }
