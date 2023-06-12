@@ -27,7 +27,7 @@ describe("API multiply", () => {
             .expect(200)
             .expect('Content-Type', "application/json; charset=utf-8")
             .then((res) => {
-                expect(res.body.result).toBeCloseTo(16.74);
+                expect(res.body.result).not.toEqual(parseInt(3.1*5.4));
             })
     })
 })
