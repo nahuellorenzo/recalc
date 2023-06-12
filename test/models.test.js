@@ -56,7 +56,7 @@ describe("History", () => {
             secondArg: 4,
             result: -6,
             operationName: "SUB",
-            error: null
+            error: 'Uno de los parámetros no es un número'
         })
 
         const histories = await History.findAll({
@@ -68,7 +68,7 @@ describe("History", () => {
         expect(histories[0].secondArg).toEqual(4)
         expect(histories[0].result).toEqual(-6)
         expect(histories[0].Operation.name).toEqual("SUB")
-        expect(histories[0].error).toEqual(null)
+        expect(histories[0].error).toEqual('Uno de los parámetros no es un número')
     })
 })
 
