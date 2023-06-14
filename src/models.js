@@ -1,4 +1,3 @@
-import { error } from 'console';
 import { Sequelize, DataTypes } from 'sequelize';
 
 const inTest = process.env.NODE_ENV === 'test';
