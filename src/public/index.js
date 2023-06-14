@@ -26,7 +26,7 @@ $buttons.addEventListener('click', async (e) => {
                 result = "error"
             }
             else{result = await calculatePow(firstArg)}
-        }
+        } 
         
         if (operation === "*") {
             result = await calculateMul(firstArg, secondArg)
