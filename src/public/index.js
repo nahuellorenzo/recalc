@@ -22,7 +22,11 @@ $buttons.addEventListener('click', async (e) => {
         }
 
         if (operation === "^2"){
-            result = await calculatePow(firstArg)
+            if (parseInt(firstArg) > 100000){
+                result = "error"
+            }
+            else{result = await calculatePow(firstArg)}
+
         }
 
         reset = true;
