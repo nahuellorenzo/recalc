@@ -1,4 +1,3 @@
-import { error } from 'console';
 import { Sequelize, DataTypes } from 'sequelize';
 
 const inTest = process.env.NODE_ENV === 'test';
@@ -63,16 +62,18 @@ export function createTables() {
 
 export async function getHistory(operationName = null) {
     try {
+        let res
         if (operationName) {
-            return await History.findAll({
+            res = await History.findAll({
                 include: Operation,
                 where: {
                     "$Operation.name$": operationName
                 }
             });
         } else {
-            return await History.findAll({ include: Operation });
+            res =  await History.findAll({ include: Operation });
         }
+        return res;
     } catch (error) {
         throw new Error('Error al obtener el historial de operaciones: ' + error.message);
     }
