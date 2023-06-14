@@ -102,3 +102,9 @@ dist
 
 # TernJS port file
 .tern-port
+
+db.sqlite3
+db.test.sqlite3
+/test-results/
+/playwright-report/
+/playwright/.cache/
