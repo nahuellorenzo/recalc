@@ -16,7 +16,7 @@ test.describe('test', () => {
     await expect(page).toHaveTitle(/recalc/i);
   });
 
-  test('Deberia poder realizar una resta', async ({ page }) => {
+    test('Deberia poder realizar una resta', async ({ page }) => {
     await page.goto('./');
 
     await page.getByRole('button', { name: '7' }).click()
@@ -77,5 +77,71 @@ test.describe('test', () => {
 
     expect(historyEntry.firstArg).toEqual(7)
     expect(historyEntry.result).toEqual(49)
+  });
+
+  test('Deberia poder realizar una multiplicacion', async ({ page }) => {
+    await page.goto('./');
+
+    await page.getByRole('button', { name: '1' }).click()
+    await page.getByRole('button', { name: '0' }).click()
+    await page.getByRole('button', { name: '*' }).click()
+    await page.getByRole('button', { name: '5' }).click()
+
+    const [response] = await Promise.all([
+      page.waitForResponse((r) => r.url().includes('/api/v1/mul/')),
+      page.getByRole('button', { name: '=' }).click()
+    ]);
+
+    const { result } = await response.json();
+    expect(result).toBe(50);
+
+    await expect(page.getByTestId('display')).toHaveValue(/50/)
+
+    const operation = await Operation.findOne({
+      where: {
+        name: "MUL"
+      }
+    });
+
+    const historyEntry = await History.findOne({
+      where: { OperationId: operation.id }
+    })
+
+    expect(historyEntry.firstArg).toEqual(10)
+    expect(historyEntry.secondArg).toEqual(5)
+    expect(historyEntry.result).toEqual(50)
+  });
+
+    test('Deberia poder realizar una suma', async ({ page }) => {
+    await page.goto('./');
+
+    await page.getByRole('button', { name: '7' }).click()
+    await page.getByRole('button', { name: '0' }).click()
+    await page.getByRole('button', { name: '+' }).click()
+    await page.getByRole('button', { name: '9' }).click()
+
+    const [response] = await Promise.all([
+      page.waitForResponse((r) => r.url().includes('/api/v1/add/')),
+      page.getByRole('button', { name: '=' }).click()
+    ]);
+
+    const { result } = await response.json();
+    expect(result).toBe(79);
+
+    await expect(page.getByTestId('display')).toHaveValue(/79/)
+
+    const operation = await Operation.findOne({
+      where: {
+        name: "ADD"
+      }
+    });
+
+    const historyEntry = await History.findOne({
+      where: { OperationId: operation.id }
+    })
+
+    expect(historyEntry.firstArg).toEqual(70)
+    expect(historyEntry.secondArg).toEqual(9)
+    expect(historyEntry.result).toEqual(79)
   });
 })
