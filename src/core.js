@@ -14,12 +14,14 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
+    let result
     if (b === 0) {
-        return "Math Error"
+        result = "Math Error"
     }
     else {
-        return a / b
+        result = a / b
     }
+    return result
 }
 
 function pow(a) {
