@@ -52,7 +52,11 @@ $buttons.addEventListener('click', async (e) => {
         operation = nextAction;
     }
 
-    if (reset) {
+    if (nextAction === "c") {
+        return renderDisplay(0);
+    }
+    
+    if (reset || currentDisplay === 0) {
         reset = false;
         operation = null;
         renderDisplay(nextAction);
