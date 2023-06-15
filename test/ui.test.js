@@ -177,6 +177,7 @@ test.describe('test', () => {
     expect(historyEntry.result).toEqual(10)
   });
 
+
   
   test('Debria poder borrar una cuenta de la interfaz con C', async ({ page }) => {
     await page.goto('./');
@@ -188,4 +189,36 @@ test.describe('test', () => {
 
     await expect(page.getByTestId('display')).toHaveValue(/0/)
   });
+
+  test('Deberia poder realizar una conversion de decimal a binario', async ({ page }) => {
+    await page.goto('./');
+
+    await page.getByRole('button', { name: '9' }).click()
+    await page.getByRole('button', { name: 'binary' }).click()
+
+    const [response] = await Promise.all([
+      page.waitForResponse((r) => r.url().includes('/api/v1/binary/')),
+      page.getByRole('button', { name: '=' }).click()
+    ]);
+
+    const { result } = await response.json();
+    expect(result).toBe(1001);
+
+    await expect(page.getByTestId('display')).toHaveValue(/1001/)
+
+    const operation = await Operation.findOne({
+      where: {
+        name: "BINARY"
+      }
+    });
+
+    const historyEntry = await History.findOne({
+      where: { OperationId: operation.id }
+    })
+
+    expect(historyEntry.firstArg).toEqual(9)
+    expect(historyEntry.result).toEqual(1001)
+  });
+
+
 })

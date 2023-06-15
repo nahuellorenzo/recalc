@@ -1,7 +1,7 @@
 const $display = document.querySelector('.display')
 const $buttons = document.querySelector('.buttons')
 
-const operations = ['-','*','+', '^2','/'];
+const operations = ['-','*','+','^2','/','binary'];
 
 let currentDisplay = "";
 let operation = null;
@@ -18,6 +18,10 @@ $buttons.addEventListener('click', async (e) => {
 
         if (operation === "-") {
             result = await calculateSub(firstArg, secondArg)
+        }
+
+        if (operation === "binary") {
+            result = await calculateBinary(firstArg)
         }
 
         if (operation === "^2"){
@@ -95,6 +99,13 @@ async function calculateMul(firstArg, secondArg) {
 
 async function calculateAdd(firstArg, secondArg) {
     const resp = await fetch(`/api/v1/add/${firstArg}/${secondArg}`)
+    const { result } = await resp.json();
+
+    return result;
+}
+
+async function calculateBinary(firstArg) {
+    const resp = await fetch(`/api/v1/binary/${firstArg}`)
     const { result } = await resp.json();
 
     return result;
