@@ -176,4 +176,16 @@ test.describe('test', () => {
     expect(historyEntry.secondArg).toEqual(9)
     expect(historyEntry.result).toEqual(10)
   });
+
+  
+  test('Debria poder borrar una cuenta de la interfaz con C', async ({ page }) => {
+    await page.goto('./');
+
+    await page.getByRole('button', { name: '9' }).click()
+    await page.getByRole('button', { name: '0' }).click()
+    await page.getByRole('button', { name: '/' }).click()
+    await page.getByRole('button', { name: 'c' }).click()
+
+    await expect(page.getByTestId('display')).toHaveValue(/0/)
+  });
 })
