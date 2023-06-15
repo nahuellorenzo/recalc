@@ -49,7 +49,12 @@ $buttons.addEventListener('click', async (e) => {
         }
 
         reset = true;
-        return renderDisplay(result);
+        if (result !== undefined) {
+            result = renderDisplay(result);
+        } else {
+            result = renderDisplay(currentDisplay);
+        }
+        return result;
     }
 
     if (operations.includes(nextAction)) {
