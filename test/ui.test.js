@@ -207,4 +207,15 @@ test.describe('test', () => {
     expect(historyEntry.result).toEqual(1001)
   });
 
+
+
+  test('Deberia poder ingresar un numero dar click en igual y que no devuelva undefined', async ({ page }) => {
+    await page.goto('./');
+
+    await page.getByRole('button', { name: '8' }).click()
+    await page.getByRole('button', { name: '=' }).click()
+
+    await expect(page.getByTestId('display')).toHaveValue(/8/)
+
+  });
 })
