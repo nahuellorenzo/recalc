@@ -257,4 +257,39 @@ test.describe('test', () => {
       expect(historyEntry.firstArg).toEqual(9)
       expect(historyEntry.result).toEqual(1001)
     });
+
+    test('Deberia realizar una resta con numeros negativos', async ({ page }) => {
+      await page.goto('./');
+    
+      await page.getByRole('button', { name: '-' }).click()
+      await page.getByRole('button', { name: '6' }).click()
+      await page.getByRole('button', { name: '3' }).click()
+      await page.getByRole('button', { name: '-' }).click()
+      await page.getByRole('button', { name: '3' }).click()
+    
+      const [response] = await Promise.all([
+        page.waitForResponse((r) => r.url().includes('/api/v1/sub/')),
+        page.getByRole('button', { name: '=' }).click()
+      ]);
+    
+      const { result } = await response.json();
+      expect(result).toBe(-66);
+    
+      await expect(page.getByTestId('display')).toHaveValue(/-66/)
+    
+      const operation = await Operation.findOne({
+        where: {
+          name: "SUB"
+        }
+      });
+    
+      const historyEntry = await History.findOne({
+        where: { OperationId: operation.id }
+      })
+    
+      expect(historyEntry.firstArg).toEqual(-63)
+      expect(historyEntry.secondArg).toEqual(3)
+      expect(historyEntry.result).toEqual(-66)
+    });
 })
+
