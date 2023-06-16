@@ -1,7 +1,7 @@
 const $display = document.querySelector('.display')
 const $buttons = document.querySelector('.buttons')
 
-const operations = ['-','*','+','^2','/','binary'];
+const operations = ['-','*','+', '^2','/', 'square', 'binary'];
 
 let currentDisplay = "";
 let operation = null;
@@ -47,6 +47,10 @@ $buttons.addEventListener('click', async (e) => {
         if (operation === "+") {
             result = await calculateAdd(firstArg, secondArg)
         }
+    
+        if (operation === "square"){
+            result = await calculateSqrt(firstArg)
+        }
 
         reset = true;
         if (result !== undefined) {
@@ -61,7 +65,11 @@ $buttons.addEventListener('click', async (e) => {
         operation = nextAction;
     }
 
-    if (reset) {
+    if (nextAction === "c") {
+        return renderDisplay(0);
+    }
+    
+    if (reset || currentDisplay === 0) {
         reset = false;
         operation = null;
         renderDisplay(nextAction);
@@ -100,6 +108,13 @@ async function calculateMul(firstArg, secondArg) {
 
 async function calculateAdd(firstArg, secondArg) {
     const resp = await fetch(`/api/v1/add/${firstArg}/${secondArg}`)
+    const { result } = await resp.json();
+
+    return result;
+}
+
+async function calculateSqrt(firstArg) {
+    const resp = await fetch(`/api/v1/sqrt/${firstArg}`)
     const { result } = await resp.json();
 
     return result;
