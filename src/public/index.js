@@ -12,12 +12,18 @@ $buttons.addEventListener('click', async (e) => {
     const nextAction = e.target.name
 
     if (nextAction === "=") {
+        let negative = false;
+        if (currentDisplay.startsWith("-")&& operation === "-")
+        {
+            currentDisplay = currentDisplay.slice(1)
+            negative = true;
+        }
         const [firstArg, secondArg] = currentDisplay.split(operation)
 
         let result;
-
+        
         if (operation === "-") {
-            result = await calculateSub(firstArg, secondArg)
+            result = await calculateSub(negative ? firstArg*(-1): firstArg, secondArg)
         }
 
         if (operation === "binary") {
