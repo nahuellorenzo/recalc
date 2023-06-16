@@ -207,6 +207,15 @@ test.describe('test', () => {
     expect(historyEntry.result).toEqual(3)
   });
 
+  test('Deberia poder ingresar un numero dar click en igual y que no devuelva undefined', async ({ page }) => {
+    await page.goto('./');
+
+    await page.getByRole('button', { name: '8' }).click()
+    await page.getByRole('button', { name: '=' }).click()
+
+    await expect(page.getByTestId('display')).toHaveValue(/8/)
+
+  });
   
     test('Debria poder borrar una cuenta de la interfaz con C', async ({ page }) => {
       await page.goto('./');
@@ -248,5 +257,4 @@ test.describe('test', () => {
       expect(historyEntry.firstArg).toEqual(9)
       expect(historyEntry.result).toEqual(1001)
     });
-  
 })
