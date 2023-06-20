@@ -5,7 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.3.3] 20-06-2023
+
+### Added 
+
+- Se agregó botón de pow
+- Se agregó función y botón de binary
+- Se realizó conexiones del front con la API
+- Se agregó el botón de raiz
+- Se agregaron test e2e
+
+### Fixed
+
+- Se solucionaron los errores de los test estáticos
+- Se solucionó bug del botón igual
+- Se solucionó bug del botón C
+- Se solucionó bug para restar números negativos
 
 ## [1.3.2] 08-06-2023
 
