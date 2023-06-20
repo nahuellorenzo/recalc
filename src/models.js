@@ -20,6 +20,10 @@ export const History = sequelize.define('History', {
     result: {
         type: DataTypes.NUMBER,
         allowNull: true
+    },
+    error: {
+        type: DataTypes.STRING,
+        allowNull: true
     }
 });
 
@@ -33,7 +37,7 @@ export const Operation = sequelize.define('Operation', {
 Operation.hasMany(History)
 History.belongsTo(Operation)
 
-export async function createHistoryEntry({ firstArg, secondArg, operationName, result }) {
+export async function createHistoryEntry({ firstArg, secondArg, operationName, result, error }) {
     const operation = await Operation.findOne({
         where: {
             name: operationName
@@ -44,7 +48,8 @@ export async function createHistoryEntry({ firstArg, secondArg, operationName, r
         firstArg,
         secondArg,
         result,
-        OperationId: operation.id
+        OperationId: operation.id,
+        error
     })
 }
 
@@ -53,4 +58,35 @@ export function createTables() {
         History.sync({ force: true }),
         Operation.sync({ force: true })
     ]);
+}
+
+export async function getHistory(operationName = null) {
+    try {
+        let res
+        if (operationName) {
+            res = await History.findAll({
+                include: Operation,
+                where: {
+                    "$Operation.name$": operationName
+                }
+            });
+        } else {
+            res =  await History.findAll({ include: Operation });
+        }
+        return res;
+    } catch (error) {
+        throw new Error('Error al obtener el historial de operaciones: ' + error.message);
+    }
+}
+
+export function deleteAllHistory() {
+    return History.destroy({
+        where: {}
+    })
+}
+
+export function getHistoryEntryById(id) {
+    return History.findByPk(id, {
+        include: Operation
+    });
 }

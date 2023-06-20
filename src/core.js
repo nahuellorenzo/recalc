@@ -7,23 +7,36 @@ function subtract(a, b) {
 }
 
 function multiply(a, b) {
-    if (a===0 || b===0) {
+    if (a === 0 || b === 0) {
         return " 0 "
     }
-    return (a * b) 
+    return (a * b)
 }
 
 function divide(a, b) {
-    if (b===0){
-        return "Math Error"
+    let result
+    if (b === 0) {
+        result = "Math Error"
     }
-    else{
-        return a/b
+    else {
+        result = a / b
     }
+    return result
 }
 
 function pow(a) {
-    return a*a
+    return a * a
+}
+
+function sqrt(a) {
+    if (a < 0) {
+        return "Math Error"
+    }
+    return Math.sqrt(a)
+}
+
+function decimalToBinary(numero) {
+    return parseInt(numero.toString(2))
 }
 
 export default {
@@ -31,5 +44,7 @@ export default {
     sub: subtract,
     mul: multiply,
     div: divide,
-    pow: pow
+    pow: pow,
+    sqrt: sqrt,
+    binary: decimalToBinary
 }
