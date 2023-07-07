@@ -1,6 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { seed } from '../src/seed.js';
 import { Operation, History } from '../src/models.js'
+import { error } from 'console';
 
 test.describe('test', () => {
   test.describe.configure({ mode: 'serial' });
@@ -291,5 +292,22 @@ test.describe('test', () => {
       expect(historyEntry.secondArg).toEqual(3)
       expect(historyEntry.result).toEqual(-66)
     });
+
+    test('Deberia lanzar un error cuando se quiere realizar una potencia con un numero mayor a 100000', async ({ page }) => {
+      await page.goto('./');
+  
+      await page.getByRole('button', { name: '9' }).click()
+      await page.getByRole('button', { name: '9' }).click()
+      await page.getByRole('button', { name: '9' }).click()
+      await page.getByRole('button', { name: '9' }).click()
+      await page.getByRole('button', { name: '9' }).click()
+      await page.getByRole('button', { name: '9' }).click()
+      await page.getByRole('button', { name: '^2' }).click()
+  
+        page.getByRole('button', { name: '=' }).click()
+  
+        await expect(page.getByTestId('display')).toHaveValue("error")
+
+    });  
 })
 
