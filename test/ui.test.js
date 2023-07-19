@@ -308,5 +308,18 @@ test.describe('test', () => {
   
         await expect(page.getByTestId('display')).toHaveValue("error")
 
-    });  
+    });
+    
+    test('Deberia lanzar un error cuando se quiere realizar una division por cero', async ({ page }) => {
+      await page.goto('./');
+
+      await page.getByRole('button', { name: '5' }).click()
+      await page.getByRole('button', { name: '/' }).click()
+      await page.getByRole('button', { name: '0' }).click()
+
+        page.getByRole('button', { name: '=' }).click()
+
+        await expect(page.getByTestId('display')).toHaveValue("Math error")
+
+    });
 })
